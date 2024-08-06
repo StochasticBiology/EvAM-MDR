@@ -1,11 +1,17 @@
 ## example of evolutionary accumulation modelling (EvAM) for multidrug resistance (MDR)
 # uses HyperTraPS-CT to explore tuberculosis MDR evolution
 
+##########
+##### Import libraries
+
 library(readxl)       # to read Excel datafile
 library(dplyr)        # for data wrangling
 
 # get this from https://github.com/StochasticBiology/hypertraps-ct
 source("hypertraps.R")
+
+##########
+##### Import and curate data
 
 # get profiles of drug resistance/susceptibility
 # Supplementary Table 4 of Casali et al., https://www.nature.com/articles/ng.2878.s3
@@ -27,6 +33,9 @@ final.df = as.data.frame(final.df)
 # https://static-content.springer.com/esm/art%3A10.1038%2Fng.2878/MediaObjects/41588_2014_BFng2878_MOESM34_ESM.txt
 tree = read.tree("41588_2014_BFng2878_MOESM34_ESM.txt")
 
+##########
+##### Evolutionary accumulation modelling
+
 # reconstruct ancestral states using parsimony picture and extract before-after transitions
 src.data = curate.tree(tree, final.df)
 
@@ -36,3 +45,8 @@ fitted.model = HyperTraPS(src.data$dests,
                           starttimes = src.data$times*1000, endtimes = src.data$times*1000, 
                           penalty = 1, seed = 1, length = 5, kernel = 3)
 
+# example visualisations
+fitted.model$featurenames = col.interest[2:11]
+plotHypercube.sampledgraph2(fitted.model, edge.label.size=3, edge.label.angle = "none", node.labels=FALSE,
+                            no.times=TRUE, small.times=TRUE) + theme(legend.position = "none")
+plotHypercube.influencegraph(fitted.model, cv.thresh = 0.3)
