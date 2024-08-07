@@ -47,6 +47,11 @@ fitted.model = HyperTraPS(src.data$dests,
 
 # example visualisations
 fitted.model$featurenames = col.interest[2:11]
-plotHypercube.sampledgraph2(fitted.model, edge.label.size=3, edge.label.angle = "none", node.labels=FALSE,
-                            no.times=TRUE, small.times=TRUE) + theme(legend.position = "none")
-plotHypercube.influencegraph(fitted.model, cv.thresh = 0.3)
+ggarrange(
+  ggarrange(plotHypercube.curated.tree(src.data),
+            plotHypercube.influencegraph(fitted.model, cv.thresh = 0.3),
+            ncol=1),
+  plotHypercube.sampledgraph2(fitted.model, edge.label.size=3, edge.label.angle = "none", node.labels=FALSE,
+                            no.times=TRUE, small.times=TRUE) + theme(legend.position = "none"),
+  ncol=2, widths=c(1,2))
+
