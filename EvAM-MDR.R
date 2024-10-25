@@ -55,3 +55,5 @@ ggarrange(
                             no.times=TRUE, small.times=TRUE) + theme(legend.position = "none"),
   ncol=2, widths=c(1,2))
 
+predictNextStep(fitted.model, c(0,0,0,0,0,0,0,0,0,0))
+predictNextStep(fitted.model, c(1,1,0,0,1,0,0,0,0,0))
