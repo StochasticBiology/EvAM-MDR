@@ -7,6 +7,8 @@
 library(readxl)       # to read Excel datafile
 library(dplyr)        # for data wrangling
 
+# clone the HyperTraPS-CT repository and load its functionality
+# note: this has a set of additional dependencies, detailed in the repo (URL below)
 system("git clone https://github.com/StochasticBiology/hypertraps-ct")
 setwd("hypertraps-ct")
 source("hypertraps.R")
