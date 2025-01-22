@@ -7,16 +7,26 @@
 library(readxl)       # to read Excel datafile
 library(dplyr)        # for data wrangling
 
-# get this from https://github.com/StochasticBiology/hypertraps-ct
+system("git clone https://github.com/StochasticBiology/hypertraps-ct")
+setwd("hypertraps-ct")
 source("hypertraps.R")
+setwd("..")
 
 ##########
-##### Import and curate data
+##### Import data
 
 # get profiles of drug resistance/susceptibility
 # Supplementary Table 4 of Casali et al., https://www.nature.com/articles/ng.2878.s3
-# https://static-content.springer.com/esm/art%3A10.1038%2Fng.2878/MediaObjects/41588_2014_BFng2878_MOESM35_ESM.xls
+system("wget https://static-content.springer.com/esm/art%3A10.1038%2Fng.2878/MediaObjects/41588_2014_BFng2878_MOESM35_ESM.xls")
 o.df = read_excel("41588_2014_BFng2878_MOESM35_ESM.xls")
+
+# get phylogeny linking isolates
+# Supplementary Data Set 1 of Casali et al., https://www.nature.com/articles/ng.2878.s3
+system("wget https://static-content.springer.com/esm/art%3A10.1038%2Fng.2878/MediaObjects/41588_2014_BFng2878_MOESM34_ESM.txt")
+tree = read.tree("41588_2014_BFng2878_MOESM34_ESM.txt")
+
+##########
+##### Curate data
 
 # extract isolate ID and resistance profiles to our ten drugs (discarding mutation info)
 # remove any incomplete profiles and recast as binary strings
@@ -27,11 +37,6 @@ final.df = df[-missing.rows,]
 final.df = final.df %>%
   mutate(across(-Isolate, ~ ifelse(. == "R", 1, 0)))
 final.df = as.data.frame(final.df)
-
-# get phylogeny linking isolates
-# Supplementary Data Set 1 of Casali et al., https://www.nature.com/articles/ng.2878.s3
-# https://static-content.springer.com/esm/art%3A10.1038%2Fng.2878/MediaObjects/41588_2014_BFng2878_MOESM34_ESM.txt
-tree = read.tree("41588_2014_BFng2878_MOESM34_ESM.txt")
 
 ##########
 ##### Evolutionary accumulation modelling
