@@ -5,4 +5,6 @@ For this pipeline you'll need R with libraries `readxl` (for reading data) and `
 
 This example code uses `wget` to download drug resistance profiles and a phylogeny for a collection of Russian tuberculosis isolates; the dataset is from [1]. It uses HyperTraPS-CT functionality to cast these observations as a set of evolutionary transitions, then performs accumulation modelling with HyperTraPS to investigate the underlying evolutionary dynamics and mechanisms. You can read more here https://arxiv.org/pdf/2411.00219 .
 
+`post-inference.Rdata` contains an R workspace image after the inference process has been run on these data; loading this should allow reproduction of the plots without re-running HyperTraPS-CT.
+
 [1] Casali, N., Nikolayevskyy, V., Balabanova, Y., Harris, S.R., Ignatyeva, O., Kontsevaya, I., Corander, J., Bryant, J., Parkhill, J., Nejentsev, S. and Horstmann, R.D., 2014. Evolution and transmission of drug-resistant tuberculosis in a Russian population. Nature genetics, 46(3), pp.279-286.
