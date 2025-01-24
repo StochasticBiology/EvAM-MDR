@@ -9,6 +9,7 @@ library(dplyr)        # for data wrangling
 
 # clone the HyperTraPS-CT repository and load its functionality
 # note: this has a set of additional dependencies, detailed in the repo (URL below)
+# if your system can't run "git" from the command line, download this repo and store it in a subdirectory of the working directory called "hypertraps-ct" then go to line 14
 system("git clone https://github.com/StochasticBiology/hypertraps-ct")
 setwd("hypertraps-ct")
 source("hypertraps.R")
@@ -56,11 +57,30 @@ fitted.model = HyperTraPS(src.data$dests,
 fitted.model$featurenames = col.interest[2:11]
 ggarrange(
   ggarrange(plotHypercube.curated.tree(src.data),
-            plotHypercube.influencegraph(fitted.model, cv.thresh = 0.3),
+            plotHypercube.influencegraph(fitted.model, cv.thresh = 0.3) + 
+              scale_edge_width_continuous(range = c(1,2)),
             ncol=1),
   plotHypercube.sampledgraph2(fitted.model, edge.label.size=3, edge.label.angle = "none", node.labels=FALSE,
                             no.times=TRUE, small.times=TRUE) + theme(legend.position = "none"),
   ncol=2, widths=c(1,2))
 
+# output results to image file for publication
+sf = 2
+png("results-grid.png", width=600*sf, height=600*sf, res=72*sf)
+ggarrange(
+  ggarrange(plotHypercube.curated.tree(src.data),
+            plotHypercube.sampledgraph2(fitted.model, edge.label.size=3, edge.label.angle = "none", node.labels=FALSE,
+                                        no.times=TRUE, small.times=TRUE) + theme(legend.position = "none") +   theme(plot.margin = unit(c(0, 0., 0, 0.), "cm")),
+   nrow=1, widths=c(1,2)),
+  ggarrange(plotHypercube.influencegraph(fitted.model, cv.thresh = 0.3) + 
+              scale_edge_width_continuous(range = c(1,2)),
+  ggplot() + geom_blank() + theme_void(),
+  nrow=1, widths=c(1,2)),
+  
+  nrow=2, heights=c(2.5,1.3))
+dev.off()
+
+# some examples of predictions given trained model
 predictNextStep(fitted.model, c(0,0,0,0,0,0,0,0,0,0))
 predictNextStep(fitted.model, c(1,1,0,0,1,0,0,0,0,0))
+plotHypercube.prediction(predictNextStep(fitted.model, c(1,1,0,0,1,0,0,0,0,0)), max.size = 10)
