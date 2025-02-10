@@ -45,5 +45,7 @@ References
 -----
 
 [1] Renz, J., Dauda, K.A., Aga, O.N., Diaz-Uriarte, R., Löhr, I.H., Blomberg, B. and Johnston, I.G., 2024. Evolutionary accumulation modelling in AMR: machine learning to infer and predict evolutionary dynamics of multi-drug resistance. arXiv preprint arXiv:2411.00219. https://arxiv.org/pdf/2411.00219 
+
 [2] Aga, O.N., Brun, M., Dauda, K.A., Diaz-Uriarte, R., Giannakis, K. and Johnston, I.G., 2024. HyperTraPS-CT: Inference and prediction for accumulation pathways with flexible data and model structures. PLOS Computational Biology, 20(9), p.e1012393. https://doi.org/10.1371/journal.pcbi.1012393
+
 [3] Casali, N., Nikolayevskyy, V., Balabanova, Y., Harris, S.R., Ignatyeva, O., Kontsevaya, I., Corander, J., Bryant, J., Parkhill, J., Nejentsev, S. and Horstmann, R.D., 2014. Evolution and transmission of drug-resistant tuberculosis in a Russian population. Nature genetics, 46(3), pp.279-286. https://doi.org/10.1038/ng.2878
