@@ -6,14 +6,14 @@
 
 library(readxl)       # to read Excel datafile
 library(dplyr)        # for data wrangling
+library(phytools)     # to read external tree data
+library(ggplot2)      # }
+library(ggpubr)       # } for visualisation
+library(ggraph)       # }
 
-# clone the HyperTraPS-CT repository and load its functionality
-# note: this has a set of additional dependencies, detailed in the repo (URL below)
-# if your system can't run "git" from the command line, download this repo and store it in a subdirectory of the working directory called "hypertraps-ct" then go to line 14
-system("git clone https://github.com/StochasticBiology/hypertraps-ct")
-setwd("hypertraps-ct")
-source("hypertraps.R")
-setwd("..")
+# download and load HyperTraPS-CT package
+remotes::install_github("StochasticBiology/hypertraps-ct@bioconductor")
+library(hypertrapsct)
 
 ##########
 ##### Import data
@@ -48,6 +48,7 @@ final.df = as.data.frame(final.df)
 src.data = curate.tree(tree, final.df)
 
 # fit model using HyperTraPS-CT (will take an hour or so with this parameterisation)
+# scaling factor of 1000 just adjusts "time" units for easier inference and interpretation
 fitted.model = HyperTraPS(src.data$dests, 
                           initialstates = src.data$srcs, 
                           starttimes = src.data$times*1000, endtimes = src.data$times*1000, 
