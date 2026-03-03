@@ -17,7 +17,7 @@ For this pipeline you will need several R packages. The following code will inst
 ## For the code in this repository
 install.packages(c("readxl", "dplyr"))
 
-## For HyperTraPS-CT itself
+## For HyperTraPS-CT itself (though these will be installed when you install the package)
 install.packages(c("Rcpp", "ggplot2", "ggpubr", "ggraph", "ggwordcloud", "igraph", "stringr", "stringdist", "phangorn", "phytools", "markdown"))
 
 if (!require("BiocManager", quietly = TRUE))
